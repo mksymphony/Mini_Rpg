@@ -6,9 +6,9 @@ public class Defind
 {
     public enum Layer
     {
-        Monster = 8 ,
-        Ground = 9 ,
-        Block = 10 ,
+        Monster = 8,
+        Ground = 9,
+        Block = 10,
     }
     public enum Scene
     {
@@ -31,6 +31,8 @@ public class Defind
     public enum MouseEvent
     {
         Press,
+        PointerDown,
+        PointerUp,
         Click,
     }
     public enum Camera_Mode

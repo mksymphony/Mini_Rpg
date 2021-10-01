@@ -10,10 +10,11 @@ public class InputManager
     public Action<Defind.MouseEvent> MouseAction = null;
 
     bool _Pressed = false;
+    float _PressedTime = 0;
     public void OnUpdate()
     {
-    //    if (EventSystem.current.IsPointerOverGameObject())
-       //     return;
+        //    if (EventSystem.current.IsPointerOverGameObject())
+        //     return;
 
         if (Input.anyKey && KeyAction != null)
             KeyAction.Invoke();
@@ -22,14 +23,24 @@ public class InputManager
         {
             if (Input.GetMouseButton(0))
             {
+                if (!_Pressed)
+                {
+                    MouseAction.Invoke(Defind.MouseEvent.PointerDown);
+                    _PressedTime = Time.time;
+                }
                 MouseAction.Invoke(Defind.MouseEvent.Press);
                 _Pressed = true;
             }
             else
             {
                 if (_Pressed)
-                    MouseAction.Invoke(Defind.MouseEvent.Click);
+                {
+                    if (Time.time < _PressedTime + 0.2f)
+                        MouseAction.Invoke(Defind.MouseEvent.Click);
+                    MouseAction.Invoke(Defind.MouseEvent.PointerUp);
+                }
                 _Pressed = false;
+                _PressedTime = 0;
             }
         }
     }
