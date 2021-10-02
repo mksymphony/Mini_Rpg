@@ -13,6 +13,8 @@ public class Game_Scene : Base_Scene
         GameManager.UI.ShowSceneUI<UI_Inven>();
 
         Dictionary<int, Data.Stat> dict = GameManager.Data.StatDict;
+         
+        gameObject.GetOrAddComponent<CursorController>();
     }
     public override void Clear()
     {

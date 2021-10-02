@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Managers\InputManager.cs" />
     <Compile Include="Assets\Script\Managers\ResourceManager.cs" />
+    <Compile Include="Assets\Script\Contents\Stat.cs" />
     <Compile Include="Assets\Script\Scenes\Login_Scene.cs" />
     <Compile Include="Assets\Script\Utills\Utill.cs" />
     <Compile Include="Assets\Script\Test_Sounds.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Assets\Script\Managers\GameManager.cs" />
     <Compile Include="Assets\Script\UI\Popup\UI_Popup.cs" />
     <Compile Include="Assets\Script\Data\Data_Contents.cs" />
+    <Compile Include="Assets\Script\Contents\PlayerStat.cs" />
     <Compile Include="Assets\Script\Controllers\CameraController.cs" />
     <Compile Include="Assets\Script\Utills\Extension.cs" />
     <Compile Include="Assets\Script\UI\UI_Base.cs" />
@@ -80,8 +82,7 @@
     <Compile Include="Assets\Script\Managers\PoolManager.cs" />
     <Compile Include="Assets\Script\Utills\Define.cs" />
     <Compile Include="Assets\Script\UI\Popup\UI_Button.cs" />
-    <Compile Include="Assets\Script\Contents\Stat.cs" />
-    <Compile Include="Assets\Script\Contents\PlayerStat.cs" />
+    <Compile Include="Assets\Script\Controllers\CursorController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Art\UnityChann\Shader\Unitychan_chara_fuku.shader" />

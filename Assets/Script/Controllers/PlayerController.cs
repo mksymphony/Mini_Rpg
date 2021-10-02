@@ -11,17 +11,6 @@ public class PlayerController : MonoBehaviour
     PlayerStat _stat;
     Vector3 _DestPos;
 
-    Texture2D _AttackIcon;
-    Texture2D _MoveIcon;
-
-    enum CursorType
-    {
-        None,
-        Attack,
-        Move,
-
-    }
-    CursorType _cursortype = CursorType.None;
 
     public enum PlayerState
     {
@@ -32,8 +21,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        _AttackIcon = GameManager.Resource.Load<Texture2D>("Textures/Cursor/Attack");
-        _MoveIcon = GameManager.Resource.Load<Texture2D>("Textures/Cursor/Move");
+
 
         _stat = GetComponent<PlayerStat>();
         /* GameManager.Input.KeyAction -= onKeyboard;
@@ -42,14 +30,54 @@ public class PlayerController : MonoBehaviour
         GameManager.Input.MouseAction += OnMouseEvent;
     }
 
+    [SerializeField]
     PlayerState _State = PlayerState.Idel;
+
+    public PlayerState State
+    {
+        get { return _State; }
+        set
+        {
+            _State = value;
+            Animator anim = GetComponent<Animator>();
+
+            switch (value)
+            {
+                case PlayerState.Die:
+                    anim.SetBool("Attack", false);
+                    break;
+                case PlayerState.Idel:
+                    anim.SetFloat("Speed", 0);
+                    anim.SetBool("Attack", false);
+                    break;
+                case PlayerState.Moving:
+                    anim.SetFloat("Speed", _stat.MoveSpeed);
+                    anim.SetBool("Attack", false);
+                    break;
+                case PlayerState.Skill:
+                    anim.SetBool("Attack", true);
+                    break;
+
+            }
+        }
+    }
+
     void UpdateMoving()
     {
+        if (_lockTarget != null)
+        {
+            float distance = (_DestPos - transform.position).magnitude;
+            if (distance <= 1)
+            {
+                State = PlayerState.Skill;
+                return;
+            }
+        }
 
         Vector3 Dir = _DestPos - transform.position;
         if (Dir.magnitude < 0.1f)
         {
-            _State = PlayerState.Idel;
+            State = PlayerState.Idel;
         }
         else
         {
@@ -63,73 +91,48 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(transform.position + Vector3.up * 0.5f, Dir, 1.0f, LayerMask.GetMask("Block")))
             {
                 if (Input.GetMouseButton(0) == false)
-                    _State = PlayerState.Idel;
+                    State = PlayerState.Idel;
                 return;
             }
 
             transform.LookAt(_DestPos);
         }
         /*      Animation       */
-        Animator anim = GetComponent<Animator>();
-        anim.SetFloat("Speed", _stat.MoveSpeed);
-    }
 
-    void UpdateIdel()
-    {
-        /*      Animation       */
-        Animator anim = GetComponent<Animator>();
-        anim.SetFloat("Speed", 0);
     }
     void UpdateDie()
     {
 
     }
-
-    void UpdateMouseCursor()
+    void UpdateSkill()
     {
-        if (Input.GetMouseButton(0))
-        {
-            return;
-        }
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //Debug.DrawRay(Camera.main.transform.position, ray.direction * 50.0f, Color.red, 1.0f);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 50.0f, _mask))
-        {
-            if (hit.collider.gameObject.layer == (int)Defind.Layer.Monster)
-            {
-                if (_cursortype != CursorType.Attack)
-                {
-                    Cursor.SetCursor(_AttackIcon, new Vector2(_AttackIcon.width / 5, 0), CursorMode.Auto);
-                    _cursortype = CursorType.Attack;
-                }
-            }
-            else
-            {
-                if (_cursortype != CursorType.Move)
-                {
-                    Cursor.SetCursor(_MoveIcon, new Vector2(_MoveIcon.width / 3, 0), CursorMode.Auto);
-                    _cursortype = CursorType.Move;
-                }
-            }
 
-        }
     }
+    void UpdateIdel()
+    {
+
+    }
+    void OnHitEvent()
+    {
+        State = PlayerState.Moving;
+    }
+
     void Update()
     {
-        UpdateMouseCursor();
         switch (_State)
         {
+            case PlayerState.Die:
+                UpdateDie();
+                break;
             case PlayerState.Idel:
                 UpdateIdel();
                 break;
             case PlayerState.Moving:
                 UpdateMoving();
                 break;
-            case PlayerState.Die:
-                UpdateDie();
+            case PlayerState.Skill:
+                UpdateSkill();
                 break;
-
         }
     }
 
@@ -160,11 +163,11 @@ public class PlayerController : MonoBehaviour
     }
     */
 
-    int _mask = (1 << (int)Defind.Layer.Ground | (1 << (int)Defind.Layer.Monster));
     GameObject _lockTarget;
+    int _mask = (1 << (int)Defind.Layer.Ground | (1 << (int)Defind.Layer.Monster));
     void OnMouseEvent(Defind.MouseEvent evt)
     {
-        if (_State == PlayerState.Die)
+        if (State == PlayerState.Die)
             return;
 
         RaycastHit hit;
@@ -178,7 +181,7 @@ public class PlayerController : MonoBehaviour
                     if (RaycaseHit)
                     {
                         _DestPos = hit.point;
-                        _State = PlayerState.Moving;
+                        State = PlayerState.Moving;
                         if (hit.collider.gameObject.layer == (int)Defind.Layer.Monster)
                             _lockTarget = hit.collider.gameObject;
                         else
@@ -186,11 +189,12 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 break;
-            case Defind.MouseEvent.PointerUp:
-                _lockTarget = null;
-                break;
+
+
             case Defind.MouseEvent.Click:
                 break;
+
+
             case Defind.MouseEvent.Press:
                 {
                     if (_lockTarget != null)
