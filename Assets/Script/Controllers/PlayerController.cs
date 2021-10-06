@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     PlayerStat _stat;
     Vector3 _DestPos;
 
-
+    int _mask = (1 << (int)Defind.Layer.Ground | (1 << (int)Defind.Layer.Monster));
     public enum PlayerState
     {
         Idel,
@@ -44,18 +44,16 @@ public class PlayerController : MonoBehaviour
             switch (value)
             {
                 case PlayerState.Die:
-                    anim.SetBool("Attack", false);
+
                     break;
                 case PlayerState.Idel:
-                    anim.SetFloat("Speed", 0);
-                    anim.SetBool("Attack", false);
+                    anim.CrossFade("WAIT", 0.1f);
                     break;
                 case PlayerState.Moving:
-                    anim.SetFloat("Speed", _stat.MoveSpeed);
-                    anim.SetBool("Attack", false);
+                    anim.CrossFade("RUN", 0.1f);
                     break;
                 case PlayerState.Skill:
-                    anim.SetBool("Attack", true);
+                    anim.CrossFade("Attack", 0.1f, -1, 0);
                     break;
 
             }
@@ -106,7 +104,12 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateSkill()
     {
-
+        if (_lockTarget != null)
+        {
+            Vector3 dir = _lockTarget.transform.position = transform.position;
+            Quaternion quat = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, quat, 10 * Time.deltaTime);
+        }
     }
     void UpdateIdel()
     {
@@ -114,7 +117,14 @@ public class PlayerController : MonoBehaviour
     }
     void OnHitEvent()
     {
-        State = PlayerState.Moving;
+        if (_StopSkill)
+        {
+            State = PlayerState.Idel;
+        }
+        else
+        {
+            State = PlayerState.Skill;
+        }
     }
 
     void Update()
@@ -164,12 +174,29 @@ public class PlayerController : MonoBehaviour
     */
 
     GameObject _lockTarget;
-    int _mask = (1 << (int)Defind.Layer.Ground | (1 << (int)Defind.Layer.Monster));
+
+    bool _StopSkill = false;
     void OnMouseEvent(Defind.MouseEvent evt)
     {
-        if (State == PlayerState.Die)
-            return;
+        switch (State)
+        {
+            case PlayerState.Idel:
+                OnMouseEvent_IdleRun(evt);
+                break;
+            case PlayerState.Moving:
+                OnMouseEvent_IdleRun(evt);
+                break;
+            case PlayerState.Skill:
+                {
+                    if (evt == Defind.MouseEvent.PointerUp)
+                        _StopSkill = true;
+                }
+                break;
+        }
+    }
 
+    void OnMouseEvent_IdleRun(Defind.MouseEvent evt)
+    {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool RaycaseHit = Physics.Raycast(ray, out hit, 50.0f, _mask);
@@ -182,6 +209,8 @@ public class PlayerController : MonoBehaviour
                     {
                         _DestPos = hit.point;
                         State = PlayerState.Moving;
+                        _StopSkill = false;
+
                         if (hit.collider.gameObject.layer == (int)Defind.Layer.Monster)
                             _lockTarget = hit.collider.gameObject;
                         else
@@ -189,22 +218,18 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 break;
-
-
             case Defind.MouseEvent.Click:
                 break;
-
-
             case Defind.MouseEvent.Press:
                 {
-                    if (_lockTarget != null)
-                    {
-                        _DestPos = _lockTarget.transform.position;
-                    }
-                    else if (RaycaseHit)
+                    if (_lockTarget == null && RaycaseHit)
                         _DestPos = hit.point;
                 }
                 break;
+            case Defind.MouseEvent.PointerUp:
+                _StopSkill = true;
+                break;
+
         }
     }
 }
