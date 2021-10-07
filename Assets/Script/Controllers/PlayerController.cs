@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
         GameManager.Input.KeyAction += onKeyboard; */
         GameManager.Input.MouseAction -= OnMouseEvent;
         GameManager.Input.MouseAction += OnMouseEvent;
+
+        GameManager.UI.MakeWorldSpaceUI<UI_HP_Bar>(transform);
     }
 
     [SerializeField]
