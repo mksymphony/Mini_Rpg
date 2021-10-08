@@ -33,7 +33,7 @@ public class Stat : MonoBehaviour
     {
         _level = 1;
         _hp = 100;
-        _maxhp = 100;
+        _maxhp = 110;
         _attack = 10;
         _depense = 5;
         _speed = 5.0f;

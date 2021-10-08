@@ -11,24 +11,11 @@ public abstract class UI_Base : MonoBehaviour
 
 	public abstract void Init();
 
-	//protected void Bind<T>(Type type) where T : UnityEngine.Object
-	//{
-	//	string[] names = Enum.GetNames(type);
-	//	UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
-	//	_objects.Add(typeof(T), objects);
-
-	//	for (int i = 0; i < names.Length; i++)
-	//	{
-	//		if (typeof(T) == typeof(GameObject))
-	//			objects[i] = Utill.FindChild(gameObject, names[i], true);
-	//		else
-	//			objects[i] = Utill.FindChild<T>(gameObject, names[i], true);
-
-	//		if (objects[i] == null)
-	//			Debug.Log($"Failed to bind({names[i]})");
-	//	}
-	//}
-	protected void Bind<T>(Type type) where T : UnityEngine.Object
+    private void Start()
+    {
+		Init();
+    }
+    protected void Bind<T>(Type type) where T : UnityEngine.Object
 	{
 		string[] names = Enum.GetNames(type);
 		UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
