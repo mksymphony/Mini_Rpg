@@ -16,7 +16,7 @@ public class CursorController : MonoBehaviour
     }
     CursorType _cursortype = CursorType.None;
 
-    int _mask = (1 << (int)Defind.Layer.Ground | (1 << (int)Defind.Layer.Monster));
+    int _mask = (1 << (int)Define.Layer.Ground | (1 << (int)Define.Layer.Monster));
     void Start()
     {
         _AttackIcon = GameManager.Resource.Load<Texture2D>("Textures/Cursor/Attack");
@@ -35,7 +35,7 @@ public class CursorController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 50.0f, _mask))
         {
-            if (hit.collider.gameObject.layer == (int)Defind.Layer.Monster)
+            if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
             {
                 if (_cursortype != CursorType.Attack)
                 {

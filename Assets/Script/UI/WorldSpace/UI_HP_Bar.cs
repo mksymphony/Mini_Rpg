@@ -9,7 +9,7 @@ public class UI_HP_Bar : UI_Base
 
     enum GameObjects
     {
-        HPBar,
+        HP_Bar,
 
     }
     Stat _stat;
@@ -32,7 +32,7 @@ public class UI_HP_Bar : UI_Base
 
     public void SetHpRatio(float ratio)
     {
-        GetObject((int)GameObjects.HPBar).GetComponent<Slider>().value = ratio;
+        GetObject((int)GameObjects.HP_Bar).GetComponent<Slider>().value = ratio;
     }
 
     

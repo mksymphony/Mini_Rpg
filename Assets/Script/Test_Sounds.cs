@@ -24,9 +24,9 @@ public class Test_Sounds : MonoBehaviour
 
         i++;
         if (i % 2 == 0)
-            GameManager.Sound.Play(audio1, Defind.Sound.BGM);
+            GameManager.Sound.Play(audio1, Define.Sound.BGM);
         else
-            GameManager.Sound.Play(audio2, Defind.Sound.Effect);
+            GameManager.Sound.Play(audio2, Define.Sound.Effect);
 
     }
 }

@@ -19,6 +19,7 @@ public class Utill
 
         if (transform == null)
             return null;
+
         return transform.gameObject;
     }
     //recursive = 포한된 인자값들또한 색적 할것인지. 

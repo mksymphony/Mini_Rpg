@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    Defind.Camera_Mode _Mode = Defind.Camera_Mode.QuarterView;
+    Define.Camera_Mode _Mode = Define.Camera_Mode.QuarterView;
     [SerializeField]
     Vector3 _Delta = new Vector3(0.0f, 5.0f, -5.0f);
     [SerializeField]
@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (_Mode == Defind.Camera_Mode.QuarterView)
+        if (_Mode == Define.Camera_Mode.QuarterView)
         {
             RaycastHit hit;
 
@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
     }
     public void SetQuarterView(Vector3 Delta)
     {
-        _Mode = Defind.Camera_Mode.QuarterView;
+        _Mode = Define.Camera_Mode.QuarterView;
         _Delta = Delta;
     }
 }

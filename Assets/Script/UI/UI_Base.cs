@@ -46,17 +46,17 @@ public abstract class UI_Base : MonoBehaviour
 	protected Button GetButton(int idx) { return Get<Button>(idx); }
 	protected Image GetImage(int idx) { return Get<Image>(idx); }
 
-	public static void BindEvent(GameObject go, Action<PointerEventData> action, Defind.UIEvent type = Defind.UIEvent.Click)
+	public static void BindEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
 	{
 		UI_EventHandler evt = Utill.GetOnAddComponent<UI_EventHandler>(go);
 
 		switch (type)
 		{
-			case Defind.UIEvent.Click:
+			case Define.UIEvent.Click:
 				evt.OnClickHandler -= action;
 				evt.OnClickHandler += action;
 				break;
-			case Defind.UIEvent.Drag:
+			case Define.UIEvent.Drag:
 				evt.OnDragHandler -= action;
 				evt.OnDragHandler += action;
 				break;

@@ -8,7 +8,7 @@ public class Game_Scene : Base_Scene
     {
         base.Init();
 
-        SceneType = Defind.Scene.Game;
+        SceneType = Define.Scene.Game;
 
         GameManager.UI.ShowSceneUI<UI_Inven>();
 

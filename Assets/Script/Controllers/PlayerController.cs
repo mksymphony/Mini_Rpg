@@ -3,73 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour
+//Local -> World = TransformDirection  로컬좌표에서 월드 좌표로.
+//World -> Local = InverseTransformDirection 월드좌표에서 로컬 좌표로.
+
+public class PlayerController : BaseController
 {
-    //Local -> World = TransformDirection  로컬좌표에서 월드 좌표로.
-    //World -> Local = InverseTransformDirection 월드좌표에서 로컬 좌표로.
+    int _mask = (1 << (int)Define.Layer.Ground | (1 << (int)Define.Layer.Monster));
+
+    bool _StopSkill = false;
 
     PlayerStat _stat;
-    Vector3 _DestPos;
-
-    int _mask = (1 << (int)Defind.Layer.Ground | (1 << (int)Defind.Layer.Monster));
-    public enum PlayerState
+    public override void Init()
     {
-        Idel,
-        Moving,
-        Die,
-        Skill,
-    }
-    void Start()
-    {
-
 
         _stat = GetComponent<PlayerStat>();
-        /* GameManager.Input.KeyAction -= onKeyboard;
-        GameManager.Input.KeyAction += onKeyboard; */
         GameManager.Input.MouseAction -= OnMouseEvent;
         GameManager.Input.MouseAction += OnMouseEvent;
-
-        GameManager.UI.MakeWorldSpaceUI<UI_HP_Bar>(transform);
+        if (gameObject.GetComponentInChildren<UI_HP_Bar>() == null)
+            GameManager.UI.MakeWorldSpaceUI<UI_HP_Bar>(transform);
     }
-
-    [SerializeField]
-    PlayerState _State = PlayerState.Idel;
-
-    public PlayerState State
-    {
-        get { return _State; }
-        set
-        {
-            _State = value;
-            Animator anim = GetComponent<Animator>();
-
-            switch (value)
-            {
-                case PlayerState.Die:
-
-                    break;
-                case PlayerState.Idel:
-                    anim.CrossFade("WAIT", 0.1f);
-                    break;
-                case PlayerState.Moving:
-                    anim.CrossFade("RUN", 0.1f);
-                    break;
-                case PlayerState.Skill:
-                    anim.CrossFade("Attack", 0.1f, -1, 0);
-                    break;
-
-            }
-        }
-    }
-
-    void UpdateMoving()
+    protected override void UpdateMoving()
     {
         if (_lockTarget != null)
         {
+            _DestPos = _lockTarget.transform.position;
             float distance = (_DestPos - transform.position).magnitude;
             if (distance <= 1)
             {
-                State = PlayerState.Skill;
+                State = Define.State.Skill;
                 return;
             }
         }
@@ -77,7 +38,7 @@ public class PlayerController : MonoBehaviour
         Vector3 Dir = _DestPos - transform.position;
         if (Dir.magnitude < 0.1f)
         {
-            State = PlayerState.Idel;
+            State = Define.State.Idel;
         }
         else
         {
@@ -91,7 +52,7 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(transform.position + Vector3.up * 0.5f, Dir, 1.0f, LayerMask.GetMask("Block")))
             {
                 if (Input.GetMouseButton(0) == false)
-                    State = PlayerState.Idel;
+                    State = Define.State.Idel;
                 return;
             }
 
@@ -100,26 +61,19 @@ public class PlayerController : MonoBehaviour
         /*      Animation       */
 
     }
-    void UpdateDie()
-    {
-
-    }
-    void UpdateSkill()
+    protected override void UpdateSkill()
     {
         if (_lockTarget != null)
         {
             Vector3 dir = _lockTarget.transform.position = transform.position;
             Quaternion quat = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, quat, 10 * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, quat, 20 * Time.deltaTime);
         }
     }
-    void UpdateIdel()
-    {
 
-    }
     void OnHitEvent()
     {
-        if(_lockTarget != null)
+        if (_lockTarget != null)
         {
             Stat targetStat = _lockTarget.GetComponent<Stat>();
             PlayerStat myStat = gameObject.GetComponent<PlayerStat>();
@@ -132,32 +86,15 @@ public class PlayerController : MonoBehaviour
 
         if (_StopSkill)
         {
-            State = PlayerState.Idel;
+            State = Define.State.Idel;
         }
         else
         {
-            State = PlayerState.Skill;
+            State = Define.State.Skill;
         }
     }
 
-    void Update()
-    {
-        switch (_State)
-        {
-            case PlayerState.Die:
-                UpdateDie();
-                break;
-            case PlayerState.Idel:
-                UpdateIdel();
-                break;
-            case PlayerState.Moving:
-                UpdateMoving();
-                break;
-            case PlayerState.Skill:
-                UpdateSkill();
-                break;
-        }
-    }
+
 
 
     /*void onKeyboard()
@@ -186,29 +123,26 @@ public class PlayerController : MonoBehaviour
     }
     */
 
-    GameObject _lockTarget;
-
-    bool _StopSkill = false;
-    void OnMouseEvent(Defind.MouseEvent evt)
+    void OnMouseEvent(Define.MouseEvent evt)
     {
         switch (State)
         {
-            case PlayerState.Idel:
+            case Define.State.Idel:
                 OnMouseEvent_IdleRun(evt);
                 break;
-            case PlayerState.Moving:
+            case Define.State.Moving:
                 OnMouseEvent_IdleRun(evt);
                 break;
-            case PlayerState.Skill:
+            case Define.State.Skill:
                 {
-                    if (evt == Defind.MouseEvent.PointerUp)
+                    if (evt == Define.MouseEvent.PointerUp)
                         _StopSkill = true;
                 }
                 break;
         }
     }
 
-    void OnMouseEvent_IdleRun(Defind.MouseEvent evt)
+    void OnMouseEvent_IdleRun(Define.MouseEvent evt)
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -216,30 +150,30 @@ public class PlayerController : MonoBehaviour
 
         switch (evt)
         {
-            case Defind.MouseEvent.PointerDown:
+            case Define.MouseEvent.PointerDown:
                 {
                     if (RaycaseHit)
                     {
                         _DestPos = hit.point;
-                        State = PlayerState.Moving;
+                        State = Define.State.Moving;
                         _StopSkill = false;
 
-                        if (hit.collider.gameObject.layer == (int)Defind.Layer.Monster)
+                        if (hit.collider.gameObject.layer == (int)Define.Layer.Monster)
                             _lockTarget = hit.collider.gameObject;
                         else
                             _lockTarget = null;
                     }
                 }
                 break;
-            case Defind.MouseEvent.Click:
+            case Define.MouseEvent.Click:
                 break;
-            case Defind.MouseEvent.Press:
+            case Define.MouseEvent.Press:
                 {
                     if (_lockTarget == null && RaycaseHit)
                         _DestPos = hit.point;
                 }
                 break;
-            case Defind.MouseEvent.PointerUp:
+            case Define.MouseEvent.PointerUp:
                 _StopSkill = true;
                 break;
 

@@ -9,7 +9,7 @@ public class Login_Scene : Base_Scene
     protected override void Init()
     {
         base.Init();
-        SceneType = Defind.Scene.Login;
+        SceneType = Define.Scene.Login;
 
         List<GameObject> list = new List<GameObject>();
         for (int i = 0; i < 2; i++)
@@ -23,7 +23,7 @@ public class Login_Scene : Base_Scene
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
-            GameManager.Scene.LoadScene(Defind.Scene.Game);
+            GameManager.Scene.LoadScene(Define.Scene.Game);
     }
     public override void Clear()
     {

@@ -10,14 +10,14 @@ public class SceneManagerEX
         get { return GameObject.FindObjectOfType<Base_Scene>(); }
     }
 
-    public void LoadScene(Defind.Scene Type)
+    public void LoadScene(Define.Scene Type)
     {
         GameManager.Clear();
         SceneManager.LoadScene(GetSceneName(Type));
     }
-    string GetSceneName(Defind.Scene Type)
+    string GetSceneName(Define.Scene Type)
     {
-        string name = System.Enum.GetName(typeof(Defind.Scene), Type);
+        string name = System.Enum.GetName(typeof(Define.Scene), Type);
         return name;
     }
     public void Clear()

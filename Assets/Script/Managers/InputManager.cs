@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class InputManager
 {
     public Action KeyAction = null;
-    public Action<Defind.MouseEvent> MouseAction = null;
+    public Action<Define.MouseEvent> MouseAction = null;
 
     bool _Pressed = false;
     float _PressedTime = 0;
@@ -25,10 +25,10 @@ public class InputManager
             {
                 if (!_Pressed)
                 {
-                    MouseAction.Invoke(Defind.MouseEvent.PointerDown);
+                    MouseAction.Invoke(Define.MouseEvent.PointerDown);
                     _PressedTime = Time.time;
                 }
-                MouseAction.Invoke(Defind.MouseEvent.Press);
+                MouseAction.Invoke(Define.MouseEvent.Press);
                 _Pressed = true;
             }
             else
@@ -36,8 +36,8 @@ public class InputManager
                 if (_Pressed)
                 {
                     if (Time.time < _PressedTime + 0.2f)
-                        MouseAction.Invoke(Defind.MouseEvent.Click);
-                    MouseAction.Invoke(Defind.MouseEvent.PointerUp);
+                        MouseAction.Invoke(Define.MouseEvent.Click);
+                    MouseAction.Invoke(Define.MouseEvent.PointerUp);
                 }
                 _Pressed = false;
                 _PressedTime = 0;

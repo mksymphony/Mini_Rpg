@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Defind
+public class Define
 {
-    public enum Layer
+
+    public enum State
+    {
+        Idel,
+        Moving,
+        Die,
+        Skill,
+    }
+public enum Layer
     {
         Monster = 8,
         Ground = 9,
