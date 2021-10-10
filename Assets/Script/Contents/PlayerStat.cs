@@ -18,8 +18,8 @@ public class PlayerStat : Stat
     private void Start()
     {
         _level = 1;
-        _hp = 100;
-        _maxhp = 150;
+        _hp = 200;
+        _maxhp = 200;
         _attack = 10;
         _depense = 5;
         _speed = 2.0f;

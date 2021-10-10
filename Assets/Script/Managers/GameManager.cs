@@ -7,8 +7,12 @@ public class GameManager : MonoBehaviour
     static GameManager s_instance; // 스텍틱의 특성을 이용해 게임매니저의 유일성을 보장해준다.
     static GameManager Instance { get { Init(); return s_instance; } } // 유일한 매니저를 가져온다.
 
+    #region Contents
+    GameManagerEx _game = new GameManagerEx();
+    public static GameManagerEx Game { get { return Instance._game; } }
+    #endregion Contents
 
-
+    #region Core
     DataManager _data = new DataManager();
     public static DataManager Data { get { return Instance._data; } }
 
@@ -30,6 +34,7 @@ public class GameManager : MonoBehaviour
     UIManager _ui = new UIManager();
     public static UIManager UI { get { return Instance._ui; } }
 
+    #endregion Core
 
     void Start()
     {
