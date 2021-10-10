@@ -296,3 +296,7 @@ D:\Unity\2021-07-15\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 D:\Unity\2021-07-15\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\Unity\2021-07-15\obj\Debug\Assembly-CSharp.dll
 D:\Unity\2021-07-15\obj\Debug\Assembly-CSharp.pdb
+D:\Unity\Mini_Rpg\obj\Debug\Assembly-CSharp.csproj.AssemblyReference.cache
+D:\Unity\Mini_Rpg\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+D:\Unity\Mini_Rpg\obj\Debug\Assembly-CSharp.dll
+D:\Unity\Mini_Rpg\obj\Debug\Assembly-CSharp.pdb

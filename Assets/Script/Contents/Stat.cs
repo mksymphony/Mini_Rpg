@@ -35,7 +35,7 @@ public class Stat : MonoBehaviour
         _hp = 100;
         _maxhp = 110;
         _attack = 10;
-        _depense = 5;
+        _depense = 2;
         _speed = 5.0f;
 
     }

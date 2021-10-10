@@ -8,9 +8,12 @@ public class PlayerStat : Stat
     protected int _exp;
     [SerializeField]
     protected int _gold;
+    [SerializeField]
+    protected float _PlayerSpeed;
 
     public int Exp { get { return _exp; } set { _exp = value; } }
     public int Gold { get { return _gold; } set { _gold = value; } }
+    public float PlayerSpeed { get { return _PlayerSpeed; } set { _PlayerSpeed = value; } }
 
     private void Start()
     {
@@ -19,7 +22,8 @@ public class PlayerStat : Stat
         _maxhp = 150;
         _attack = 10;
         _depense = 5;
-        _speed = 5.0f;
+        _speed = 2.0f;
+        _PlayerSpeed = 5.0f;
         _exp = 0;
         _gold = 100;
     }

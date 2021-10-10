@@ -42,11 +42,10 @@ public class PlayerController : BaseController
         }
         else
         {
-            NavMeshAgent nav = gameObject.GetComponent<NavMeshAgent>();
-            float MoveDist = Mathf.Clamp(_stat.MoveSpeed * Time.deltaTime, 0, Dir.magnitude);
-            //  nav.CalculatePath;
-            nav.Move(Dir.normalized * MoveDist);
-            // nav.SetDestination(_DestPos);
+            //  NavMeshAgent nav = gameObject.GetComponent<NavMeshAgent>();
+            // float MoveDist = Mathf.Clamp(_stat.PlayerSpeed * Time.deltaTime, 0, Dir.magnitude);
+            //  nav.Move(Dir.normalized * MoveDist);
+
 
             Debug.DrawRay(transform.position, Dir.normalized, Color.green);
             if (Physics.Raycast(transform.position + Vector3.up * 0.5f, Dir, 1.0f, LayerMask.GetMask("Block")))
@@ -55,7 +54,8 @@ public class PlayerController : BaseController
                     State = Define.State.Idel;
                 return;
             }
-
+            float movdDist = Mathf.Clamp(_stat.PlayerSpeed * Time.deltaTime, 0, Dir.magnitude);
+            transform.position += Dir.normalized * movdDist;
             transform.LookAt(_DestPos);
         }
         /*      Animation       */
@@ -93,36 +93,6 @@ public class PlayerController : BaseController
             State = Define.State.Skill;
         }
     }
-
-
-
-
-    /*void onKeyboard()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.5f);
-            transform.position += (Vector3.forward * Time.deltaTime * _speed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.5f);
-            transform.position += (Vector3.back * Time.deltaTime * _speed);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.5f);
-            transform.position += (Vector3.right * Time.deltaTime * _speed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.5f);
-            transform.position += (Vector3.left * Time.deltaTime * _speed);
-        }
-        _MoveToDest = false;
-    }
-    */
-
     void OnMouseEvent(Define.MouseEvent evt)
     {
         switch (State)
