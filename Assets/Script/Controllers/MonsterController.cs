@@ -16,6 +16,7 @@ public class MonsterController : BaseController
 
     public override void Init()
     {
+        WorldObjectType = Define.WorldObject.Monster;
         _stat = GetComponent<Stat>();
         if (gameObject.GetComponentInChildren<UI_HP_Bar>() == null)
             GameManager.UI.MakeWorldSpaceUI<UI_HP_Bar>(transform);
@@ -94,7 +95,7 @@ public class MonsterController : BaseController
 
             if (targetStat.HP <= 0)
             {
-                GameObject.Destroy(targetStat.gameObject);
+                GameManager.Game.DeSpawn(targetStat.gameObject);
             }
 
             if (targetStat.HP > 0)

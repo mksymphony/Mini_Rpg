@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Define
 {
-
+    public enum WorldObject
+    {
+        Unknown,
+        Player,
+        Monster,
+    }
     public enum State
     {
         Idel,
@@ -12,7 +17,7 @@ public class Define
         Die,
         Skill,
     }
-public enum Layer
+    public enum Layer
     {
         Monster = 8,
         Ground = 9,

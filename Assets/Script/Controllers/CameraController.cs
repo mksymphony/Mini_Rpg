@@ -11,11 +11,12 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     GameObject _Player = null;
 
+    public void SetPlayer(GameObject player) { _Player = player; }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        //_Player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -24,7 +25,7 @@ public class CameraController : MonoBehaviour
         if (_Mode == Define.Camera_Mode.QuarterView)
         {
 
-            if (_Player == null)
+            if (_Player.IsVallid() == false)
             {
                 return;
             }

@@ -15,4 +15,8 @@ public static class Extension
     {
         UI_Base.BindEvent(go, action, type);
     }
+    public static bool IsVallid(this GameObject go) // 게임오브잭트 체크
+    {
+        return go != null && go.activeSelf; // 게임오브젝트가 비어있거나 활성화 되지 않은경우.
+    }
 }
