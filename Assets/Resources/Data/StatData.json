@@ -2,18 +2,21 @@
   "stats": [
     {
       "Level": "1",
-      "Hp": "100",
-      "Attack": "10"
+      "MaxHp": "200",
+      "Attack": "20",
+      "TotalEXP": "0"
     },
     {
       "Level": "2",
-      "Hp": "150",
-      "Attack": "15"
+      "MaxHp": "250",
+      "Attack": "25",
+      "TotalEXP": "10"
     },
     {
       "Level": "3",
-      "Hp": "200",
-      "Attack": "20"
+      "MaxHp": "300",
+      "Attack": "30",
+      "TotalEXP": "50"
     }
   ]
-} 
+}

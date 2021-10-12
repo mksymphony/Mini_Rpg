@@ -76,14 +76,8 @@ public class PlayerController : BaseController
         if (_lockTarget != null)
         {
             Stat targetStat = _lockTarget.GetComponent<Stat>();
-            PlayerStat myStat = gameObject.GetComponent<PlayerStat>();
-
-            int Damege = Mathf.Max(0, myStat.Attack - targetStat.Defense);
-            Debug.Log(Damege);
-            targetStat.HP -= Damege;
-
+            targetStat.OnAttacked(_stat); //공격 함수 호출.
         }
-
         if (_StopSkill)
         {
             State = Define.State.Idel;

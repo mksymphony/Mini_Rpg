@@ -10,6 +10,7 @@ public class GameManagerEx
 
     HashSet<GameObject> _monster = new HashSet<GameObject>(); // ItemID를 관리할 필요가 없기때문에 Dictionary 대신 HashSet을 이용
 
+    public GameObject GetPlayer() { return _player; }
     public GameObject Spwan(Define.WorldObject type, string path, Transform parent = null) //스폰시킬 객체 타입, 경로 , 부모 를 정의
     {
         GameObject go = GameManager.Resource.Instantiate(path, parent); //게임오브젝트 go 에 생성할 객체의 경로,부모를 받아서 저장함

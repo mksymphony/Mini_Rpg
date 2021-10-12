@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public abstract class Base_Scene : MonoBehaviour
 {
-    Define.Scene _SceneType = Define.Scene.Unknown;  //초기 씬의 상태
+    Define.Scene _SceneType = Define.Scene.Game;  //초기 씬의 상태
 
     public Define.Scene SceneType { get; protected set; } = Define.Scene.Lobby;
     void Awake()

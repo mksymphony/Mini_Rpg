@@ -24,16 +24,13 @@ public class MonsterController : BaseController
 
     protected override void UpdateIdel()
     {
-        Debug.Log("Monster UpdateIdle");
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameManager.Game.GetPlayer();
         if (player == null)
             return;
         float distance = (player.transform.position - transform.position).magnitude;
 
         if (distance <= _scanRange)
         {
-            Debug.Log("ScanTarget");
-
             _lockTarget = player;
             State = Define.State.Moving;
             return;
@@ -41,7 +38,6 @@ public class MonsterController : BaseController
     }
     protected override void UpdateMoving()
     {
-        Debug.Log("Monster UpdateMoving");
         if (_lockTarget != null)
         {
             _DestPos = _lockTarget.transform.position;
@@ -50,7 +46,6 @@ public class MonsterController : BaseController
             {
                 NavMeshAgent nav = gameObject.GetComponent<NavMeshAgent>();
                 nav.SetDestination(transform.position);
-                Debug.Log("MonsterAttack");
                 State = Define.State.Skill;
                 return;
             }
@@ -84,19 +79,11 @@ public class MonsterController : BaseController
     }
     void OnHitEvent()
     {
-        Debug.Log("Monster OnHitEvent");
         if (_lockTarget != null)
         {
             Stat targetStat = _lockTarget.GetComponent<Stat>();
 
-            int Damege = Mathf.Max(0, _stat.Attack - targetStat.Defense);
-            Debug.Log(Damege);
-            targetStat.HP -= Damege;
-
-            if (targetStat.HP <= 0)
-            {
-                GameManager.Game.DeSpawn(targetStat.gameObject);
-            }
+            targetStat.OnAttacked(_stat); //공격 함수 호출.
 
             if (targetStat.HP > 0)
             {
