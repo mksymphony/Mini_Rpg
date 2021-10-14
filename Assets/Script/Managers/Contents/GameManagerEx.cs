@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class GameManagerEx
 
     HashSet<GameObject> _monster = new HashSet<GameObject>(); // ItemID를 관리할 필요가 없기때문에 Dictionary 대신 HashSet을 이용
 
+    public Action<int> OnspawnEvent; // 리턴타입이 없는 Action을 이용 하여 값 전달
     public GameObject GetPlayer() { return _player; }
     public GameObject Spwan(Define.WorldObject type, string path, Transform parent = null) //스폰시킬 객체 타입, 경로 , 부모 를 정의
     {
@@ -19,6 +21,8 @@ public class GameManagerEx
         {
             case Define.WorldObject.Monster:
                 _monster.Add(go);            // 받는 형식이 몬스터일시 몬스터를 정의
+                if (OnspawnEvent != null) // 몬스터가 추가될시 값 1추가
+                    OnspawnEvent.Invoke(1);
                 break;
             case Define.WorldObject.Player:
                 _player = go;                // 플레이어 일시 플레이어를 정의
@@ -49,7 +53,11 @@ public class GameManagerEx
             case Define.WorldObject.Monster:  //몬스터 타입을 초기화 시킴
                 {
                     if (_monster.Contains(go))
+                    {
                         _monster.Remove(go);
+                        if (OnspawnEvent != null) // 몬스터가 추가될시 값 -1추가
+                            OnspawnEvent.Invoke(-1);
+                    }
                     break;
                 }
             case Define.WorldObject.Player:

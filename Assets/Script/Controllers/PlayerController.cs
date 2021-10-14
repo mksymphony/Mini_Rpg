@@ -36,6 +36,7 @@ public class PlayerController : BaseController
         }
 
         Vector3 Dir = _DestPos - transform.position;
+        Dir.y = 0;
         if (Dir.magnitude < 0.1f)
         {
             State = Define.State.Idel;

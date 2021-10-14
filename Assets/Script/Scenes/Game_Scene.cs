@@ -19,7 +19,9 @@ public class Game_Scene : Base_Scene
         GameObject player = GameManager.Game.Spwan(Define.WorldObject.Player, "UnityChan");
         Camera.main.gameObject.GetComponent<CameraController>().SetPlayer(player);
 
-        GameManager.Game.Spwan(Define.WorldObject.Monster, "MaleDummy");
+        GameObject go = new GameObject { name = "SpawningPool" }; // 스포닝푸 가져오기.
+        SpawningPool pool = go.GetOrAddComponent<SpawningPool>(); // ??
+        pool.SetKeepMonsterCount(5); // 최대값 지정
     }
     public override void Clear()
     {
