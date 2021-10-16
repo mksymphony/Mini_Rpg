@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManagerEx Game { get { return Instance._game; } }
     #endregion Contents
 
-    #region Core
+    #region Core 
     DataManager _data = new DataManager();
     public static DataManager Data { get { return Instance._data; } }
 

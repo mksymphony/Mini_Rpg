@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,9 @@
     <UnityVersion>2020.3.14f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Script\Managers\Core\InputManager.cs" />
     <Compile Include="Assets\Script\Controllers\BaseController.cs" />
     <Compile Include="Assets\Script\Managers\Core\ResourceManager.cs" />
@@ -77,6 +80,7 @@
     <Compile Include="Assets\Script\Contents\PlayerStat.cs" />
     <Compile Include="Assets\Script\Controllers\CameraController.cs" />
     <Compile Include="Assets\Script\Utills\Extension.cs" />
+    <Compile Include="Assets\Script\Contents\SpawningPool.cs" />
     <Compile Include="Assets\Script\UI\UI_Base.cs" />
     <Compile Include="Assets\Script\Managers\Core\FrefabTest.cs" />
     <Compile Include="Assets\Script\Managers\Contents\GameManagerEx.cs" />
@@ -87,7 +91,6 @@
     <Compile Include="Assets\Script\UI\WorldSpace\UI_HP_Bar.cs" />
     <Compile Include="Assets\Script\Utills\Define.cs" />
     <Compile Include="Assets\Script\UI\Popup\UI_Button.cs" />
-    <Compile Include="Assets\Script\Contents\SpawningPool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Art\UnityChann\Shader\Unitychan_chara_fuku.shader" />

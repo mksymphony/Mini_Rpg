@@ -36,8 +36,8 @@ public class PlayerStat : Stat
             }
         }
     }
-    public int Gold { get { return _gold; } set { _gold = value; } }
-    public float PlayerSpeed { get { return _PlayerSpeed; } set { _PlayerSpeed = value; } }
+    public int Gold { get { return _gold; } set { _gold = value; } }  // 플레이어의 게임 머니
+    public float PlayerSpeed { get { return _PlayerSpeed; } set { _PlayerSpeed = value; } } // 플레이어 개인 스피드 설정
 
     private void Start()
     {
