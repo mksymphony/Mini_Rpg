@@ -64,7 +64,7 @@ public class PlayerController : BaseController
     {
         if (_lockTarget != null) // 적을 발견할시.
         {
-            Vector3 dir = _lockTarget.transform.position = transform.position; // 타겟의 위치값
+            Vector3 dir = _lockTarget.transform.position - transform.position; // 타겟의 위치값
             Quaternion quat = Quaternion.LookRotation(dir); // 적이 존재하는 방향
             transform.rotation = Quaternion.Lerp(transform.rotation, quat, 20 * Time.deltaTime); // 플레이어가 바라보는 방향을 고정시켜줌
         }

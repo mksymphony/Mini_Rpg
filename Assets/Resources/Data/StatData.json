@@ -10,13 +10,31 @@
       "Level": "2",
       "MaxHp": "250",
       "Attack": "25",
-      "TotalEXP": "10"
+      "TotalEXP": "50"
     },
     {
       "Level": "3",
       "MaxHp": "300",
       "Attack": "30",
-      "TotalEXP": "50"
+      "TotalEXP": "100"
+    },
+    {
+      "Level": "4",
+      "MaxHp": "350",
+      "Attack": "30",
+      "TotalEXP": "150"
+    },
+    {
+      "Level": "5",
+      "MaxHp": "370",
+      "Attack": "35",
+      "TotalEXP": "200"
+    },
+    {
+      "Level": "6",
+      "MaxHp": "380",
+      "Attack": "35",
+      "TotalEXP": "400"
     }
   ]
 }
