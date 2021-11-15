@@ -44,8 +44,8 @@ public class UI_Button : UI_Popup
 
 		GetButton((int)Buttons.PointButton).gameObject.BindEvent(OnButtonClicked);
 
-		GameObject go = GetImage((int)Images.ItemIcon).gameObject;
-		BindEvent(go, (PointerEventData data) => { go.transform.position = data.position; }, Define.UIEvent.Drag);
+		GameObject go = GetImage((int)Images.ItemIcon).gameObject; // 이미지 아이콘 받아오기
+		BindEvent(go, (PointerEventData data) => { go.transform.position = data.position; }, Define.UIEvent.Drag); // 
 	}
 
     int _score = 0;

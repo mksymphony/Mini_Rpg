@@ -14,9 +14,9 @@ public abstract class Base_Scene : MonoBehaviour
     }
     protected virtual void Init()
     {
-        Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
+        Object obj = GameObject.FindObjectOfType(typeof(EventSystem)); //이벤트 시스템 지정.
 
-        if (obj == null)
+        if (obj == null) //비어있을시 생성.
         {
             GameManager.Resource.Instantiate("UI/EventSystem").name = "@EventSystem";
         }

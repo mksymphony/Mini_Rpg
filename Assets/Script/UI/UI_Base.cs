@@ -15,26 +15,26 @@ public abstract class UI_Base : MonoBehaviour
     {
 		Init();
     }
-    protected void Bind<T>(Type type) where T : UnityEngine.Object
+    protected void Bind<T>(Type type) where T : UnityEngine.Object // 게임오브젝트 타입 묶어두기.
 	{
-		string[] names = Enum.GetNames(type);
-		UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
-		_objects.Add(typeof(T), objects);
+		string[] names = Enum.GetNames(type); // 타입의 이름을 스트링 배열 형식으로 저장해둔다.
+		UnityEngine.Object[] objects = new UnityEngine.Object[names.Length]; // 오브젝트에 이름크기만큼 받아온다.
+		_objects.Add(typeof(T), objects); // 오브젝트 추가.
 
-		for (int i = 0; i < names.Length; i++)
+		for (int i = 0; i < names.Length; i++) // 이름의 길이 만큼.
 		{
-			if (typeof(T) == typeof(GameObject))
-				objects[i] = Utill.FindChild(gameObject, names[i], true);
+			if (typeof(T) == typeof(GameObject)) // 받아온 오브젝트가 게임오브젝트이리.
+				objects[i] = Utill.FindChild(gameObject, names[i], true); // 자식 받아오기.
 			else
-				objects[i] = Utill.FindChild<T>(gameObject, names[i], true);
+				objects[i] = Utill.FindChild<T>(gameObject, names[i], true); // 일반 타입 자식 받아오기
 
-			if (objects[i] == null)
+			if (objects[i] == null) // 예외처리.
 				Debug.Log($"Failed to bind({names[i]})");
 		}
 	}
-	protected T Get<T>(int idx) where T : UnityEngine.Object
+	protected T Get<T>(int idx) where T : UnityEngine.Object // 오브젝트 형식 인덱스 받아오기.
 	{
-		UnityEngine.Object[] objects = null;
+		UnityEngine.Object[] objects = null; // 
 		if (_objects.TryGetValue(typeof(T), out objects) == false)
 			return null;
 

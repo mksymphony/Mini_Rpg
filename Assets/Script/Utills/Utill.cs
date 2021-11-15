@@ -13,7 +13,7 @@ public class Utill
             Component = go.AddComponent<T>();
         return Component;
     }
-    public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
+    public static GameObject FindChild(GameObject go, string name = null, bool recursive = false) // 게임오브젝트 만들어놓은 자식을 찾기위한 함수
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
 
@@ -23,7 +23,7 @@ public class Utill
         return transform.gameObject;
     }
     //recursive = 포한된 인자값들또한 색적 할것인지. 
-    public static T FindChild<T>(GameObject go, string name = null, bool recursive = false) where T : UnityEngine.Object
+    public static T FindChild<T>(GameObject go, string name = null, bool recursive = false) where T : UnityEngine.Object // 일반화.
     {
         if (go == null)
             return null;
